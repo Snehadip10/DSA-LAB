@@ -13,7 +13,7 @@ void display();
 }
 void read()
 {
-printf("Enter the MAIN string: \n")
+printf("Enter the MAIN string: \n");
 scanf("%[^\n]s",STR);
 printf("Enter a PATTERN string: \n");
 scanf("%s",PAT);
