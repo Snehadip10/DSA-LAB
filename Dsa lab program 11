@@ -1,0 +1,35 @@
+#include <stdio.h>
+#define MAX 10
+
+int graph[MAX][MAX];
+int visited[MAX];
+
+void createGraph(int n) {
+    int i, j;
+    for (i = 0; i < n; i++) {
+        for (j = 0; j < n; j++) {
+            printf("Enter edge between city %d and city %d (1/0): ", i, j);
+            scanf("%d", &graph[i][j]);
+        }
+    }
+}
+void DFS(int n, int start) {
+    visited[start] = 1;
+    printf("%d ", start);
+    for (int i = 0; i < n; i++) {
+        if (graph[start][i] == 1 && visited[i] == 0) {
+            DFS(n, i);
+        }
+    }
+}
+int main() {
+    int n, start;
+    printf("Enter number of cities: ");
+    scanf("%d", &n);
+    createGraph(n);
+    printf("Enter starting city: ");
+    scanf("%d", &start);
+    printf("Nodes reachable from city %d using DFS: ", start);
+    DFS(n, start);
+    return 0;
+}
