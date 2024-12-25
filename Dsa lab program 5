@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <math.h>
+
+int stack[100], top = -1;
+
+void push(int x) { stack[++top] = x; }
+int pop() { return stack[top--]; }
+
+int evaluate(char expression[]) {
+    int i, operand1, operand2;
+    for (i = 0; expression[i]; i++) {
+        if (isdigit(expression[i])) push(expression[i] - '0');
+        else {
+            operand2 = pop();
+            operand1 = pop();
+            switch (expression[i]) {
+                case '+': push(operand1 + operand2); break;
+                case '-': push(operand1 - operand2); break;
+                case '*': push(operand1 * operand2); break;
+                case '/': push(operand1 / operand2); break;
+                case '%': push(operand1 % operand2); break;
+                case '^': push((int) pow(operand1, operand2)); break;
+            }
+        }
+    }
+    return pop();
+}
+
+int main() {
+    char expression[100];
+    printf("Enter a suffix expression: ");
+    scanf("%s", expression);
+    printf("Result: %d\n", evaluate(expression));
+}
+
+
+# Tower of Hanoi
+
+#include <stdio.h>
+
+void towerOfHanoi(int n, char fromRod, char toRod, char auxRod) {
+    if (n == 1) printf("Move disk 1 from rod %c to rod %c\n", fromRod, toRod);
+    else {
+        towerOfHanoi(n - 1, fromRod, auxRod, toRod);
+        printf("Move disk %d from rod %c to rod %c\n", n, fromRod, toRod);
+        towerOfHanoi(n - 1, auxRod, toRod, fromRod);
+    }
+}
+
+int main() {
+    int n;
+    printf("Enter the number of disks: ");
+    scanf("%d", &n);
+    towerOfHanoi(n, 'A', 'C', 'B');
+}
