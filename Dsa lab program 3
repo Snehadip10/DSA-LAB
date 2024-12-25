@@ -1,0 +1,60 @@
+#include <stdio.h>
+
+#define MAX 10
+
+int stack[MAX], top = -1;
+
+void push(int x) {
+    if (top == MAX - 1) printf("Stack Overflow!\n");
+    else stack[++top] = x;
+}
+
+int pop() {
+    if (top == -1) {
+        printf("Stack Underflow!\n");
+        return -1;
+    }
+    return stack[top--];
+}
+
+void checkPalindrome(char str[]) {
+    int length = 0;
+    for (int i = 0; str[i] != '\0'; i++) {
+        length++;
+        push(str[i]);
+    }
+    for (int i = 0; i < length; i++) {
+        char temp = pop();
+        if (str[i] != temp) {
+            printf("%s is not a palindrome.\n", str);
+            return;
+        }
+    }
+    printf("%s is a palindrome.\n", str);
+}
+
+void display() {
+    if (top == -1) printf("Stack is empty.\n");
+    else {
+        printf("Stack elements: ");
+        for (int i = 0; i <= top; i++) printf("%d ", stack[i]);
+        printf("\n");
+    }
+}
+
+int main() {
+    int choice, x;
+    char str[100];
+    while (1) {
+        printf("1. Push\n2. Pop\n3. Palindrome\n4. Display\n5. Exit\n");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1: scanf("%d", &x); push(x); break;
+            case 2: pop(); break;
+            case 3: scanf("%s", str); checkPalindrome(str); break;
+            case 4: display(); break;
+            case 5: return 0;
+            default: printf("Invalid choice!\n");
+        }
+    }
+}
