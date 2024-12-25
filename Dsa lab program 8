@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int SSN;
+    char Name[30];
+    char Dept[10];
+    char Designation[20];
+    float Sal;
+    char PhNo[15];
+    struct Node* prev;
+    struct Node* next;
+} Node;
+
+Node* head = NULL;
+Node* tail = NULL;
+int count = 0;
+
+void createList() {
+    int n;
+    printf("Enter number of employees: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        Node* newNode = (Node*)malloc(sizeof(Node));
+        printf("Enter SSN, Name, Dept, Designation, Sal, PhNo: ");
+        scanf("%d %s %s %s %f %s", &newNode->SSN, newNode->Name, newNode->Dept, newNode->Designation, &newNode->Sal, newNode->PhNo);
+        if (head == NULL) head = tail = newNode;
+        else {
+            newNode->prev = tail;
+            tail->next = newNode;
+            tail = newNode;
+        }
+        count++;
+    }
+}
+void displayList() {
+    Node* temp = head;
+    if (temp == NULL) printf("List is empty.\n");
+    else {
+        printf("List of employees:\n");
+        while (temp != NULL) {
+            printf("%d %s %s %s %f %s\n", temp->SSN, temp->Name, temp->Dept, temp->Designation, temp->Sal, temp->PhNo);
+            temp = temp->next;
+        }
+        printf("Number of nodes: %d\n", count);
+    }
+}
+int main() {
+    int choice;
+    while (1) {
+        printf("1. Create list\n");
+        printf("2. Display list\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+        switch (choice) {
+            case 1: createList(); break;
+            case 2: displayList(); break;
+            case 3: return 0;
+            default: printf("Invalid choice.\n");
+        }
+    }
+}
