@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct Node {
+    int data;
+    struct Node* left;
+    struct Node* right;
+} Node;
+
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+Node* insertNode(Node* root, int data) {
+    if (root == NULL) return createNode(data);
+    if (data < root->data) root->left = insertNode(root->left, data);
+    else root->right = insertNode(root->right, data);
+    return root;
+}
+void inorderTraversal(Node* root) {
+    if (root != NULL) {
+        inorderTraversal(root->left);
+        printf("%d ", root->data);
+        inorderTraversal(root->right);
+    }
+}
+int main() {
+    Node* root = NULL;
+    int choice, data;
+
+    while (1) {
+        printf("1. Insert\n2. Traverse\n3. Exit\n");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                printf("Enter data: ");
+                scanf("%d", &data);
+                root = insertNode(root, data);
+                break;
+
+            case 2:
+                printf("Inorder traversal: ");
+                inorderTraversal(root);
+                printf("\n");
+                break;
+
+            case 3:
+                return 0;
+
+            default:
+                printf("Invalid choice\n");
+        }
+    }
+    return 0;
+}
